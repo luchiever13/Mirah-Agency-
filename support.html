@@ -180,7 +180,7 @@
     <nav>
         <div class="nav-inner">
             <a href="index.html">Salary Calculator</a>
-            <a href="Database.html">Database Gaji</a>
+            <a href="database.html">Database Gaji</a>
             <a href="event.html">Special Send</a>
             <a href="support.html" class="active">Contact Support</a>
             <a href="#" onclick="localStorage.removeItem('isLoggedIn'); location.reload();" class="btn-logout">LOGOUT</a>
@@ -218,7 +218,6 @@
         const tbody = document.getElementById('cashbon-rows');
         const storageKey = 'omp_cashbon_data_v2';
 
-        // Load data dari localStorage atau buat data awal
         function initTable() {
             const savedData = JSON.parse(localStorage.getItem(storageKey)) || {};
             
@@ -236,7 +235,6 @@
             }
         }
 
-        // Fungsi simpan data per sel
         window.saveData = function(index, field, value) {
             const currentData = JSON.parse(localStorage.getItem(storageKey)) || {};
             if (!currentData[index]) currentData[index] = {};
@@ -246,7 +244,6 @@
             console.log(`Saved Row ${index}: ${field} = ${value}`);
         };
 
-        // Jalankan saat load
         document.addEventListener('DOMContentLoaded', initTable);
     </script>
 
