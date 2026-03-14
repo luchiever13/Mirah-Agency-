@@ -3,230 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Database Gaji OMP</title>
-    
+    <title>Agency OMP - Salary System</title>
     <script src="auth.js"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=EB+Garamond&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=EB+Garamond:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --neon-blue: #00d4ff;
-            --neon-white: #ffffff;
-            --neon-red: #ff0033;
-            --dark-bg: #020508;
-            --blue-glow: 0 0 10px rgba(0, 212, 255, 0.7), 0 0 20px rgba(0, 212, 255, 0.3);
-            --white-glow: 0 0 10px rgba(255, 255, 255, 0.8);
-            --red-glow: 0 0 10px rgba(255, 0, 51, 0.7);
-        }
-
-        body {
-            background: var(--dark-bg);
-            color: var(--neon-white);
-            font-family: 'EB Garamond', serif;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* ANIMASI LATAR BELAKANG */
-        .bg-marquee {
-            position: fixed;
-            top: 200px;
-            left: 0;
-            width: 100%;
-            white-space: nowrap;
-            font-size: 80px;
-            font-family: 'Playfair Display', serif;
-            font-weight: bold;
-            color: rgba(0, 212, 255, 0.03);
-            text-transform: uppercase;
-            letter-spacing: 20px;
-            pointer-events: none;
-            z-index: -2;
-            animation: move-text 40s linear infinite;
-        }
-
-        @keyframes move-text {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
-        /* HEADER & NAV */
-        header {
-            padding: 40px 20px;
-            text-align: center;
-            background: linear-gradient(to bottom, #05101a, #020508);
-            border-bottom: 2px solid var(--neon-blue);
-            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
-            position: relative; z-index: 10;
-        }
-
-        h1 { font-family: 'Playfair Display', serif; color: var(--neon-white); margin: 0; letter-spacing: 5px; font-size: 36px; text-shadow: var(--white-glow), 0 0 15px var(--neon-blue); }
-        .motto { font-style: italic; color: #88a0b0; font-size: 14px; margin-top: 10px; }
-
+        :root { --neon-blue: #00d4ff; --neon-white: #ffffff; --neon-red: #ff0033; --dark-bg: #020508; --card-bg: rgba(255, 255, 255, 0.03); --blue-glow: 0 0 10px rgba(0, 212, 255, 0.5); --white-glow: 0 0 10px rgba(255, 255, 255, 0.8); --red-glow: 0 0 10px rgba(255, 0, 51, 0.7); }
+        body { background: var(--dark-bg); color: #fff; font-family: 'EB Garamond', serif; margin: 0; }
+        header { padding: 40px 20px; text-align: center; background: #05101a; border-bottom: 2px solid var(--neon-blue); }
+        h1 { font-family: 'Playfair Display', serif; color: var(--neon-white); text-shadow: var(--white-glow); margin: 0; letter-spacing: 5px; }
         nav { background: rgba(0, 0, 0, 0.8); padding: 12px 0; border-bottom: 1px solid #0a1a2a; text-align: center; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
-        .nav-inner a { color: #88a0b0; text-decoration: none; margin: 0 15px; text-transform: uppercase; font-size: 11px; transition: 0.3s; cursor: pointer; }
-        .nav-inner a:hover, .nav-inner a.active { color: var(--neon-blue); font-weight: bold; text-shadow: var(--blue-glow); }
-
-        .btn-logout {
-            color: var(--neon-red) !important;
-            font-weight: bold !important;
-            border: 1px solid var(--neon-red) !important;
-            padding: 4px 12px !important;
-            border-radius: 4px !important;
-            text-shadow: var(--red-glow);
-        }
-
-        /* TABLE AREA */
-        main { padding: 20px; max-width: 1100px; margin: auto; position: relative; z-index: 5; }
-        .section-title { font-family: 'Playfair Display', serif; font-size: 24px; text-align: center; color: var(--neon-white); margin: 30px 0; text-transform: uppercase; text-shadow: var(--white-glow); }
-
-        .table-wrapper {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 12px;
-            border: 1px solid rgba(0, 212, 255, 0.2);
-            overflow-x: auto;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.9);
-            backdrop-filter: blur(10px);
-            margin-bottom: 50px;
-        }
-
-        table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: center; }
-        th { background: #05101a; color: var(--neon-blue); padding: 15px 5px; text-transform: uppercase; font-size: 11px; border-bottom: 2px solid var(--neon-blue); }
-        td { padding: 12px 5px; border-bottom: 1px solid #0a1a2a; color: #cbd5e0; }
-        
-        .lvl-bold { font-weight: bold; color: var(--neon-white); text-shadow: var(--white-glow); }
-        .koin-bold { color: #ffeb3b; font-weight: bold; }
-        .usd-highlight { color: #2ecc71; font-weight: bold; }
-
-        footer { text-align: center; padding: 40px; color: #4a5568; font-size: 12px; border-top: 1px solid #0a1a2a; }
+        .nav-inner a { color: #88a0b0; text-decoration: none; margin: 0 15px; text-transform: uppercase; font-size: 11px; cursor: pointer; }
+        .nav-inner a.active { color: var(--neon-blue); font-weight: bold; text-shadow: var(--blue-glow); }
+        .btn-logout { color: var(--neon-red) !important; border: 1px solid var(--neon-red) !important; padding: 4px 12px !important; border-radius: 4px !important; }
+        main { padding: 40px 20px; max-width: 1200px; margin: auto; }
+        .card { background: var(--card-bg); padding: 30px; border-radius: 12px; border: 1px solid rgba(0, 212, 255, 0.2); margin-bottom: 40px; }
+        .grid-horizontal { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 15px; }
+        input, select { width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.5); border: 1px solid #1a2a3a; color: #fff; border-radius: 4px; }
+        .btn-submit { grid-column: span 4; padding: 18px; background: transparent; color: var(--neon-blue); border: 2px solid var(--neon-blue); font-weight: bold; cursor: pointer; text-transform: uppercase; }
+        .table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; background: rgba(0, 0, 0, 0.3); }
+        th { background: #05101a; color: var(--neon-blue); padding: 15px; border-bottom: 2px solid var(--neon-blue); font-size: 11px; }
+        td { padding: 12px; border-bottom: 1px solid #1a2a3a; text-align: center; font-size: 13px; }
     </style>
 </head>
 <body>
-
-    <div class="bg-marquee">METROPOLIS AGENCY • SYSTEM ONLINE • METROPOLIS AGENCY</div>
-
     <header>
-        <h1>Mirah AGENCY</h1>
-        <div class="motto">"Integrity, Excellence, and Financial Transparency"</div>
-        <div style="color: var(--neon-blue); margin-top: 12px; font-weight: bold; font-size: 12px; text-shadow: var(--blue-glow); text-transform: uppercase; letter-spacing: 2px;">Authorized by: Momo OMP</div>
+        <h1>Mirah Agency</h1>
+        <div style="color: var(--neon-blue); margin-top: 12px; font-weight: bold; font-size: 12px; letter-spacing: 2px;">Authorized by: Momo OMP</div>
     </header>
-
     <nav>
         <div class="nav-inner">
-            <a href="index.html">Salary Calculator</a>
-            <a href="database.html" class="active">Database Gaji</a>
+            <a href="index.html" class="active">Salary Calculator</a>
+            <a href="database.html">Database Gaji</a>
             <a href="event.html">Special Send</a>
             <a href="support.html">Contact Support</a>
             <a onclick="logoutSystem()" class="btn-logout">LOGOUT</a>
         </div>
     </nav>
-
     <main>
-        <div class="section-title">Saved Salary Records</div>
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nama</th>
-                        <th>Level</th>
-                        <th>Koin</th>
-                        <th>Total IDR</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="savedDataBody"></tbody>
-            </table>
+        <div class="card">
+            <div class="grid-horizontal">
+                <div><input type="text" id="hostID" placeholder="ID Host"></div>
+                <div><input type="text" id="hostName" placeholder="Nama Host"></div>
+                <div><input type="number" id="inputKoin" placeholder="Target Koin" oninput="hitungGaji()"></div>
+                <div><input type="number" id="inputKasbon" placeholder="Kasbon (Rp)" oninput="hitungGaji()"></div>
+            </div>
+            <div class="grid-horizontal">
+                <div><input type="text" id="resLevel" readonly placeholder="Level"></div>
+                <div><input type="text" id="resGajiUSD" readonly placeholder="Gaji $"></div>
+                <div><input type="text" id="resTotalIDR" readonly style="color:var(--neon-blue)" placeholder="Total Rp"></div>
+                <div><select id="status"><option value="Waiting">Waiting</option><option value="Done">Done</option></select></div>
+                <button class="btn-submit" onclick="simpanData()">Submit to Ledger</button>
+            </div>
         </div>
-
-        <div class="section-title">Reference: Target & Valid Duration</div>
-        <div class="table-wrapper">
+        <div class="table-container">
             <table>
-                <thead>
-                    <tr>
-                        <th>Level</th>
-                        <th>Hari</th>
-                        <th>Jam</th>
-                        <th>Target Koin</th>
-                        <th>Gaji Host ($)</th>
-                        <th>Bonus Agency</th>
-                        <th>Bonus YoYo</th>
-                    </tr>
-                </thead>
-                <tbody id="masterTableBody"></tbody>
+                <thead><tr><th>ID</th><th>NAMA</th><th>LVL</th><th>KOIN</th><th>BASE ($)</th><th>GAJI (Rp)</th><th>KASBON</th><th>TOTAL</th><th>STATUS</th><th>AKSI</th></tr></thead>
+                <tbody id="tableBody"></tbody>
             </table>
         </div>
     </main>
-
-    <footer>
-        <p>&copy; 2026 Mirah Agency | Internal Reference Database</p>
-    </footer>
-
     <script>
-        const DATA_MASTER = [
-            {lvl:"A", h:8, j:16, t:"5.000", usd:"2.5", bAF:"-", bY:"-"},
-            {lvl:"B", h:8, j:16, t:"8.000", usd:"4.0", bAF:"-", bY:"-"},
-            {lvl:"C", h:8, j:16, t:"13.000", usd:"6.5", bAF:"-", bY:"-"},
-            {lvl:"D", h:8, j:16, t:"19.000", usd:"9.4", bAF:"-", bY:"-"},
-            {lvl:"E", h:8, j:16, t:"27.000", usd:"13.2", bAF:"-", bY:"-"},
-            {lvl:"F", h:8, j:16, t:"37.000", usd:"18.0", bAF:"-", bY:"-"},
-            {lvl:"G", h:8, j:16, t:"52.000", usd:"25.1", bAF:"-", bY:"-"},
-            {lvl:"H", h:8, j:16, t:"67.000", usd:"32.1", bAF:"-", bY:"-"},
-            {lvl:"I", h:8, j:16, t:"88.000", usd:"42.0", bAF:"750", bY:"-"},
-            {lvl:"J", h:15, j:30, t:"110.000", usd:"52.1", bAF:"1.500", bY:"-"},
-            {lvl:"K", h:15, j:30, t:"135.000", usd:"63.0", bAF:"1.800", bY:"-"},
-            {lvl:"L", h:15, j:30, t:"165.000", usd:"76.0", bAF:"2.100", bY:"-"},
-            {lvl:"M", h:15, j:30, t:"195.000", usd:"89.0", bAF:"2.300", bY:"500"},
-            {lvl:"N", h:15, j:30, t:"230.000", usd:"104.0", bAF:"3.000", bY:"1.000"},
-            {lvl:"O", h:15, j:30, t:"270.000", usd:"121.0", bAF:"3.500", bY:"2.000"},
-            {lvl:"P", h:15, j:30, t:"310.000", usd:"137.0", bAF:"4.500", bY:"3.000"},
-            {lvl:"Q", h:15, j:30, t:"360.000", usd:"157.0", bAF:"5.500", bY:"4.000"},
-            {lvl:"S1", h:15, j:30, t:"400.000", usd:"168.0", bAF:"6.000", bY:"5.000"},
-            {lvl:"S2", h:15, j:30, t:"450.000", usd:"180.0", bAF:"7.000", bY:"7.000"},
-            {lvl:"S3", h:15, j:30, t:"500.000", usd:"195.0", bAF:"8.000", bY:"10.000"},
-            {lvl:"S4", h:15, j:30, t:"650.000", usd:"250.0", bAF:"12.000", bY:"15.000"},
-            {lvl:"S5", h:15, j:30, t:"800.000", usd:"300.0", bAF:"16.000", bY:"20.000"},
-            {lvl:"S6", h:15, j:30, t:"950.000", usd:"350.0", bAF:"20.000", bY:"30.000"},
-            {lvl:"S7", h:15, j:30, t:"1.100.000", usd:"395.0", bAF:"25.000", bY:"40.000"}
-        ];
-
-        window.onload = function() {
-            // Render Tabel Referensi
-            const masterTable = document.getElementById('masterTableBody');
-            masterTable.innerHTML = DATA_MASTER.map(d => `
-                <tr>
-                    <td class="lvl-bold">${d.lvl}</td>
-                    <td>${d.h}</td>
-                    <td>${d.j}</td>
-                    <td class="koin-bold">${d.t}</td>
-                    <td class="usd-highlight">$${d.usd}</td>
-                    <td>${d.bAF}</td>
-                    <td style="color:var(--neon-red)">${d.bY}</td>
-                </tr>
-            `).join('');
-
-            // Render Tabel Saved Records
-            const savedData = JSON.parse(localStorage.getItem('agencyData') || '[]');
-            const savedBody = document.getElementById('savedDataBody');
-            
-            if (savedData.length === 0) {
-                savedBody.innerHTML = '<tr><td colspan="6" style="padding:20px;">Belum ada data yang disimpan.</td></tr>';
-            } else {
-                savedBody.innerHTML = savedData.map(item => `
-                    <tr>
-                        <td>${item.id}</td>
-                        <td>${item.nama}</td>
-                        <td class="lvl-bold">${item.lvl}</td>
-                        <td class="koin-bold">${parseInt(item.koin).toLocaleString()}</td>
-                        <td class="usd-highlight">Rp ${item.bersih.toLocaleString('id-ID')}</td>
-                        <td style="color:${item.status === 'Done' ? '#00ffcc' : '#ffeb3b'}">${item.status}</td>
-                    </tr>
-                `).join('');
-            }
+        const KURS = 15500;
+        const masterGaji = [{koin:5000,lvl:'A',usd:2.5},{koin:8000,lvl:'B',usd:4.0},{koin:13000,lvl:'C',usd:6.5},{koin:19000,lvl:'D',usd:9.4},{koin:27000,lvl:'E',usd:13.2},{koin:37000,lvl:'F',usd:18.0},{koin:52000,lvl:'G',usd:25.1},{koin:67000,lvl:'H',usd:32.1},{koin:88000,lvl:'I',usd:42.0},{koin:110000,lvl:'J',usd:52.1},{koin:135000,lvl:'K',usd:63.0},{koin:165000,lvl:'L',usd:76.0},{koin:195000,lvl:'M',usd:89.0},{koin:230000,lvl:'N',usd:104.0},{koin:270000,lvl:'O',usd:121.0},{koin:310000,lvl:'P',usd:137.0},{koin:360000,lvl:'Q',usd:157.0},{koin:400000,lvl:'S1',usd:168.0},{koin:450000,lvl:'S2',usd:180.0},{koin:500000,lvl:'S3',usd:195.0},{koin:650000,lvl:'S4',usd:250.0},{koin:800000,lvl:'S5',usd:300.0},{koin:950000,lvl:'S6',usd:350.0},{koin:1100000,lvl:'S7',usd:395.0}];
+        let currentData = { lvl: '-', usd: 0 };
+        function hitungGaji() {
+            const koin = parseInt(document.getElementById('inputKoin').value) || 0;
+            const kasbon = parseInt(document.getElementById('inputKasbon').value) || 0;
+            let hasil = { lvl: '-', usd: 0 };
+            for (let i = masterGaji.length - 1; i >= 0; i--) { if (koin >= masterGaji[i].koin) { hasil = masterGaji[i]; break; } }
+            currentData = hasil;
+            const gajiBersih = (hasil.usd * KURS) - kasbon;
+            document.getElementById('resLevel').value = hasil.lvl;
+            document.getElementById('resGajiUSD').value = hasil.usd + " $";
+            document.getElementById('resTotalIDR').value = "Rp " + gajiBersih.toLocaleString('id-ID');
         }
+        function simpanData() {
+            const id = document.getElementById('hostID').value;
+            const nama = document.getElementById('hostName').value;
+            const koin = parseInt(document.getElementById('inputKoin').value) || 0;
+            const kasbon = parseInt(document.getElementById('inputKasbon').value) || 0;
+            const status = document.getElementById('status').value;
+            if (!id || !nama || !koin) return alert("Isi ID, Nama, dan Koin!");
+            const entry = { id, nama, lvl: currentData.lvl, koin, usd: currentData.usd, kotor: (currentData.usd * KURS), kasbon, bersih: (currentData.usd * KURS) - kasbon, status };
+            let db = JSON.parse(localStorage.getItem('agencyData') || '[]');
+            db.push(entry);
+            localStorage.setItem('agencyData', JSON.stringify(db));
+            renderTable(db);
+        }
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = "";
+            data.forEach((item, index) => {
+                const isDone = item.status === 'Done';
+                const editAttr = isDone ? '' : 'contenteditable="true"';
+                const editBg = isDone ? '' : 'background:rgba(0,212,255,0.05);';
+                tbody.innerHTML += `<tr>
+                    <td ${editAttr} style="${editBg}" onblur="updateRow(${index},'id',this.innerText)">${item.id}</td>
+                    <td ${editAttr} style="${editBg}" onblur="updateRow(${index},'nama',this.innerText)">${item.nama}</td>
+                    <td>${item.lvl}</td>
+                    <td ${editAttr} style="${editBg}" onblur="updateRow(${index},'koin',this.innerText)">${item.koin}</td>
+                    <td>${item.usd}$</td>
+                    <td>Rp ${item.kotor.toLocaleString()}</td>
+                    <td ${editAttr} style="${editBg}color:var(--neon-red);" onblur="updateRow(${index},'kasbon',this.innerText)">${item.kasbon}</td>
+                    <td style="color:var(--neon-blue)">Rp ${item.bersih.toLocaleString()}</td>
+                    <td><select onchange="updateRow(${index},'status',this.value)"><option value="Waiting" ${item.status==='Waiting'?'selected':''}>Waiting</option><option value="Done" ${item.status==='Done'?'selected':''}>Done</option></select></td>
+                    <td><button onclick="hapusData(${index})">Hapus</button></td>
+                </tr>`;
+            });
+        }
+        function updateRow(index, field, value) {
+            let db = JSON.parse(localStorage.getItem('agencyData'));
+            if (db[index].status === 'Done' && field !== 'status') return renderTable(db);
+            if (field === 'koin' || field === 'kasbon') {
+                db[index][field] = parseInt(value.replace(/\D/g,'')) || 0;
+                let c = {lvl:'-',usd:0};
+                for(let i=masterGaji.length-1;i>=0;i--) if(db[index].koin>=masterGaji[i].koin){c=masterGaji[i];break;}
+                db[index].lvl=c.lvl; db[index].usd=c.usd; db[index].kotor=c.usd*KURS; db[index].bersih=db[index].kotor-db[index].kasbon;
+            } else { db[index][field] = value; }
+            localStorage.setItem('agencyData', JSON.stringify(db));
+            renderTable(db);
+        }
+        function hapusData(index) { let db = JSON.parse(localStorage.getItem('agencyData')); db.splice(index,1); localStorage.setItem('agencyData',JSON.stringify(db)); renderTable(db); }
+        window.onload = () => { const s = localStorage.getItem('agencyData'); if(s) renderTable(JSON.parse(s)); };
     </script>
 </body>
-    </html>
+</html>
