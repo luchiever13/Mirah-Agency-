@@ -93,7 +93,7 @@
         .auth-tag { color: var(--neon-blue); margin-top: 12px; font-weight: bold; font-size: 12px; text-shadow: var(--blue-glow); text-transform: uppercase; letter-spacing: 2px; }
 
         nav { background: rgba(0, 0, 0, 0.8); padding: 12px 0; border-bottom: 1px solid #0a1a2a; text-align: center; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
-        .nav-inner a { color: #88a0b0; text-decoration: none; margin: 0 15px; text-transform: uppercase; font-size: 11px; transition: 0.3s; }
+        .nav-inner a { color: #88a0b0; text-decoration: none; margin: 0 15px; text-transform: uppercase; font-size: 11px; transition: 0.3s; cursor: pointer; }
         .nav-inner a:hover, .nav-inner a.active { color: var(--neon-blue); font-weight: bold; border-bottom: 1px solid var(--neon-blue); text-shadow: var(--blue-glow); }
 
         .btn-logout {
@@ -180,10 +180,10 @@
     <nav>
         <div class="nav-inner">
             <a href="index.html">Salary Calculator</a>
-            <a href="database.html">database Gaji</a>
+            <a href="database.html">Database Gaji</a>
             <a href="event.html">Special Send</a>
             <a href="support.html" class="active">Contact Support</a>
-            <a href="#" onclick="localStorage.removeItem('isLoggedIn'); location.reload();" class="btn-logout">LOGOUT</a>
+            <a onclick="logoutSystem()" class="btn-logout">LOGOUT</a>
         </div>
     </nav>
 
@@ -241,10 +241,14 @@
             
             currentData[index][field] = value;
             localStorage.setItem(storageKey, JSON.stringify(currentData));
-            console.log(`Saved Row ${index}: ${field} = ${value}`);
         };
 
         document.addEventListener('DOMContentLoaded', initTable);
+        
+        function logoutSystem() {
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'login.html'; // Sesuaikan dengan nama file login Anda
+        }
     </script>
 
     <footer>
